@@ -73,25 +73,55 @@ async function initFiles() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
+  let fileButtons = [];
+  let dirButtons = [];
+
   for (const item of data) {
     if (item.type === "file") {
-      const text = await fetchText(item.download_url);
-      const firstLine = (text.split("\n")[0] || item.name).replace(/^\/\//, "").trim();
-      const btn = document.createElement("button");
-      btn.textContent = firstLine || item.name;
-      btn.onclick = () => {
-        window.location.href = `code.html?path=${encodeURIComponent(item.path)}`;
-      };
-      container.appendChild(btn);
+      try {
+        const text = await fetchText(item.download_url);
+        const firstLine = (text.split("\n")[0] || item.name).replace(/^\/\//, "").trim();
+
+        // Extract serial number (digits before first space)
+        let serialMatch = firstLine.match(/^(\d+)\s+(.*)$/);
+        let serial = serialMatch ? parseInt(serialMatch[1], 10) : 9999;
+        let title = serialMatch ? serialMatch[2] : firstLine;
+
+        fileButtons.push({
+          serial,
+          title: title || item.name,
+          path: item.path
+        });
+      } catch (e) {
+        console.error("Error fetching file:", e);
+      }
     } else if (item.type === "dir" && item.name !== "Ignore-Me") {
-      const btn = document.createElement("button");
-      btn.textContent = "📂 " + item.name;
-      btn.onclick = () => {
-        window.location.href = `files.html?path=${encodeURIComponent(item.path)}`;
-      };
-      container.appendChild(btn);
+      dirButtons.push(item);
     }
   }
+
+  // Sort files by serial number
+  fileButtons.sort((a, b) => a.serial - b.serial);
+
+  // Render file buttons
+  fileButtons.forEach(f => {
+    const btn = document.createElement("button");
+    btn.textContent = `${f.serial}. ${f.title}`;
+    btn.onclick = () => {
+      window.location.href = `code.html?path=${encodeURIComponent(f.path)}`;
+    };
+    container.appendChild(btn);
+  });
+
+  // Render subdir buttons (after files)
+  dirButtons.forEach(d => {
+    const btn = document.createElement("button");
+    btn.textContent = "📂 " + d.name;
+    btn.onclick = () => {
+      window.location.href = `files.html?path=${encodeURIComponent(d.path)}`;
+    };
+    container.appendChild(btn);
+  });
 }
 
 // CODE PAGE
@@ -109,7 +139,7 @@ async function initCode() {
 
   const text = await fetchText(data.download_url);
   const lines = text.split("\n");
-  if (lines[0].startsWith("//")) lines.shift();
+  if (lines[0].startsWith("//")) lines.shift(); // remove 1st line
 
   const codeText = lines.join("\n");
   document.getElementById("codeBlock").textContent = codeText;
