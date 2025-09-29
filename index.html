@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Repo Explorer</title>
+  <meta charset="UTF-8">
+  <title>Manir's C Projects</title>
   <link rel="stylesheet" href="Ignore-Me/style.css">
 </head>
-<body onload="loadRootDirs()">
-  <h1>GitHub Repo Explorer</h1>
-  <h2>Root Directories</h2>
-  <div class="container"></div>
+<body>
+  <h1>📂 C Projects</h1>
+  <div id="spinner"></div>
+  <div id="content"></div>
   <script src="Ignore-Me/script.js"></script>
+  <script>
+    loadIndex();
+  </script>
 </body>
 </html>
