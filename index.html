@@ -47,13 +47,89 @@
         text-align: center;
         padding: 10px;
       }
+      .menu {
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 260px;
+  height: 100%;
+  background: #111;
+  color: #fff;
+  transition: right 0.3s ease;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+  border-radius: 20px 0 0 20px;
+}
+
+#drawer.active {
+  right: 0;
+}
+
+.drawer-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.drawer-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.drawer-header h3 {
+  margin-top: 10px;
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drawer-links a {
+  text-decoration: none;
+  color: #fff;
+  background: #222;
+  padding: 10px 15px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.drawer-links a:hover {
+  background: #444;
+}
     </style>
     <div class="header">
   <div class="title-area">
     <div class="title">BCA C projects by Manir</div>
     <div class="breadcrumb" id="breadcrumb"></div>
   </div>
-  <div class="menu">&#8942;</div>
+  <div class="menu" onclick="toggleDrawer()">&#8942;</div>
+
+<!-- Drawer -->
+<div id="drawer">
+  <div class="drawer-header">
+    <img src="https://avatars.githubusercontent.com/u/210948104?v=4" alt="Profile">
+    <h3>Manir</h3>
+  </div>
+  <div class="drawer-links">
+    <a href="https://github.com/Manir-devs/" target="_blank">🐙 Github</a>
+    <a href="https://instagram.com/artistry_with_manir___" target="_blank">📸 Instagram</a>
+    <a href="mailto:maniruz.zaman.primary@gmail.com">📧 Mail</a>
+  </div>
+</div>
+      <script>
+function toggleDrawer() {
+  document.getElementById("drawer").classList.toggle("active");
+}
+</script>
 </div>
 
   </div>
