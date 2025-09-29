@@ -80,12 +80,17 @@ async function initFiles() {
     if (item.type === "file") {
       try {
         const text = await fetchText(item.download_url);
-        const firstLine = (text.split("\n")[0] || item.name).replace(/^\/\//, "").trim();
+        const firstLine = (text.split("\n")[0] || item.name).trim();
 
-        // Extract serial number (digits before first space)
-        let serialMatch = firstLine.match(/^(\d+)\s+(.*)$/);
-        let serial = serialMatch ? parseInt(serialMatch[1], 10) : 9999;
-        let title = serialMatch ? serialMatch[2] : firstLine;
+        // Properly match format: //NUMBER Some text
+        let serial = 9999;
+        let title = firstLine;
+
+        const match = firstLine.match(/^\/\/\s*(\d+)\s+(.*)$/);
+        if (match) {
+          serial = parseInt(match[1], 10);
+          title = match[2].trim();
+        }
 
         fileButtons.push({
           serial,
