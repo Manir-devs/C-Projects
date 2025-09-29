@@ -1,94 +1,72 @@
-const owner = "Manir-devs";
-const repo = "C-Projects";
+const repo = "Manir-devs/C-Projects";
+const apiBase = "https://api.github.com/repos/" + repo + "/contents/";
 
-// --- Utility ---
-function escapeHtml(text) {
-  return text.replace(/&/g,"&amp;")
-             .replace(/</g,"&lt;")
-             .replace(/>/g,"&gt;");
+function showSpinner(show) {
+  const sp = document.getElementById("spinner");
+  if (!sp) return;
+  sp.style.display = show ? "block" : "none";
 }
 
-async function fetchContents(path = "") {
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const resp = await fetch(url);
-  if (!resp.ok) {
-    console.error("GitHub API error:", resp.status);
-    return [];
-  }
-  return resp.json();
-}
+async function loadIndex() {
+  showSpinner(true);
+  const res = await fetch(apiBase);
+  const data = await res.json();
+  showSpinner(false);
 
-// ---------------- ROOT PAGE ----------------
-async function loadRootDirs() {
-  const items = await fetchContents("");   // root contents
-  const dirs = items.filter(i => i.type === "dir"); // only dirs
-  const container = document.querySelector(".container");
+  const container = document.getElementById("content");
+  container.innerHTML = "";
 
-  if (dirs.length === 0) {
-    container.innerHTML = "<p>No directories found.</p>";
-    return;
-  }
-
-  container.innerHTML = dirs.map(d =>
-    `<button onclick="window.location='Ignore-Me/files.html?dir=${encodeURIComponent(d.path)}'">${d.name}</button>`
-  ).join("");
-}
-
-// ---------------- FILES PAGE ----------------
-async function loadFilesPage() {
-  const params = new URLSearchParams(window.location.search);
-  const dir = params.get("dir");
-  if (!dir) return;
-  document.querySelector("h2").innerText = `Directory: ${dir}`;
-
-  const items = await fetchContents(dir);
-  const files = items.filter(i => i.type === "file"); // only files
-
-  if (files.length === 0) {
-    document.querySelector(".container").innerHTML = "<p>No files found.</p>";
-    return;
-  }
-
-  let html = "";
-  for (let f of files) {
-    const meta = await fetchContents(f.path);
-    let content = "";
-    if (meta.content) {
-      content = atob(meta.content.replace(/\n/g,""));
+  data.forEach(item => {
+    if (item.type === "dir" && item.name !== "Ignore-Me") {
+      const btn = document.createElement("button");
+      btn.innerText = item.name;
+      btn.onclick = () => window.location.href = `Ignore-Me/files.html?path=${item.path}`;
+      container.appendChild(btn);
     }
-    let lines = content.split("\n");
-    let title = (lines.length > 0 && lines[0].startsWith("//"))
-      ? lines[0].slice(2).trim()
-      : f.name;
-
-    html += `<button onclick="window.location='code.html?path=${encodeURIComponent(f.path)}'">${title}</button>`;
-  }
-  document.querySelector(".container").innerHTML = html;
+  });
 }
 
-// ---------------- CODE PAGE ----------------
-async function loadCodePage() {
-  const params = new URLSearchParams(window.location.search);
-  const path = params.get("path");
-  if (!path) return;
+async function loadFiles(path) {
+  showSpinner(true);
+  const res = await fetch(apiBase + path);
+  const data = await res.json();
+  showSpinner(false);
 
-  const meta = await fetchContents(path);
-  let content = "";
-  if (meta.content) {
-    content = atob(meta.content.replace(/\n/g,""));
-  }
+  document.getElementById("dirName").innerText = "📁 " + path;
+  const container = document.getElementById("content");
+  container.innerHTML = "";
 
-  let lines = content.split("\n");
-  if (lines[0].startsWith("//")) lines.shift(); // remove first line
-  const codeText = lines.join("\n");
+  data.forEach(async item => {
+    if (item.type === "file" && item.name.endsWith(".c")) {
+      const fileRes = await fetch(item.download_url);
+      const text = await fileRes.text();
+      const firstLine = text.split("\n")[0] || item.name;
 
-  document.querySelector(".container").innerHTML = `
-    <button id="copyBtn">Copy</button>
-    <pre id="codeBlock">${escapeHtml(codeText)}</pre>
-  `;
+      const btn = document.createElement("button");
+      btn.innerText = firstLine.replace(/\/\//, "").trim();
+      btn.onclick = () => window.location.href = `code.html?path=${item.path}`;
+      container.appendChild(btn);
+    } else if (item.type === "dir" && item.name !== "Ignore-Me") {
+      const btn = document.createElement("button");
+      btn.innerText = "📂 " + item.name;
+      btn.onclick = () => window.location.href = `files.html?path=${item.path}`;
+      container.appendChild(btn);
+    }
+  });
+}
 
-  document.getElementById("copyBtn").onclick = () => {
-    navigator.clipboard.writeText(codeText);
-    alert("Copied!");
-  };
+async function loadCode(path) {
+  showSpinner(true);
+  const res = await fetch(apiBase + path);
+  const data = await res.json();
+  showSpinner(false);
+
+  document.getElementById("fileName").innerText = data.name;
+
+  const fileRes = await fetch(data.download_url);
+  const text = await fileRes.text();
+  const lines = text.split("\n");
+  lines.shift(); // remove 1st line
+
+  document.getElementById("codeBlock").textContent = lines.join("\n");
 }
