@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>View Code</title>
+  <meta charset="UTF-8">
+  <title>Code</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadCodePage()">
-  <h1>GitHub Repo Explorer</h1>
-  <div class="container"></div>
+<body>
+  <h1 id="fileName"></h1>
+  <div id="spinner"></div>
+  <pre id="codeBlock"></pre>
   <script src="script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    loadCode(params.get("path"));
+  </script>
 </body>
 </html>
