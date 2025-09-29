@@ -1,18 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Code Viewer</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Safe C Code Viewer</title>
+<style>
+body { background:#1e1e1e; color:#fff; font-family:monospace; padding:20px; }
+#breadcrumb{margin-bottom:14px; color:#9aa7b2; font-size:14px;}
+#question{margin:6px 0 14px; font-weight:700; font-size:18px;}
+pre#codeBlock{background:#000; padding:16px; border-radius:8px; overflow:auto; white-space:pre; line-height:1.45; font-size:14px; color:#e6eef6;}
+button#copyBtn{margin-top:12px;padding:6px 10px;border-radius:6px;border:0;cursor:pointer;background:#0ea5a4;color:#001; font-weight:600;}
+a{color:#7cc0ff;text-decoration:none}
+/* C syntax highlighting */
+.tk-preproc{color:#c586c0;}
+.tk-include{color:#b4d1ff;}
+.tk-key{color:#569cd6;}
+.tk-type{color:#4ec9b0;}
+.tk-func{color:#dcdCAA;}
+.tk-string{color:#ce9178;}
+.tk-num{color:#b5cea8;}
+.tk-comment{color:#6a9955;font-style:italic;}
+</style>
 </head>
 <body onload="initCode()">
-  <div class="breadcrumb" id="breadcrumb"></div>
-  <h2 id="fileName"></h2>
-  <div id="spinner" class="spinner"></div>
-  <div class="container">
-    <button id="copyBtn">Copy</button>
-    <pre id="codeBlock"></pre>
-  </div>
-  <script src="script.js"></script>
+
+<div id="breadcrumb">Home</div>
+<div id="question">Loading question...</div>
+<pre id="codeBlock">Loading...</pre>
+<button id="copyBtn">Copy</button>
+
+<script>
+const owner="Manir-devs";
+const repo="C-Projects";
+
+function buildBreadcrumb(path){
+  const bc=document.getElementById('breadcrumb');
+  if(!path){bc.innerText='Home';return;}
+  const parts=path.split('/'); let html=' <a href="https://Manir-devs.github.io/C-Projects/">Home</a>'; let link='';
+  parts.forEach((p,i)=>{link+=(i?'/':'')+p; html+=' / '+(i===parts.length-1?p:`<a href="files.html?path=${encodeURIComponent(link)}">${p}</a>`);});
+  bc.innerHTML=html;
+}
+
+// Escape HTML
+function escapeHTML(str){return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+// simple tokenizer for syntax highlight preserving spaces/newlines
+function highlightCSafe(code, pre){
+  pre.textContent=''; // clear
+  const frag=document.createDocumentFragment();
+  const lines=code.split(/\r?\n/);
+  for(let line of lines){
+    // split by tokens but preserve spaces
+    let tokens=line.match(/\/\/.*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b\d+(\.\d+)?\b|#.*|<[^>\n]+>|\b[A-Za-z_]\w*\b|[^\s]/g) || [];
+    let pos=0;
+    for(let tok of tokens){
+      // append spaces between tokens
+      const idx=line.indexOf(tok,pos);
+      if(idx>pos) frag.appendChild(document.createTextNode(line.slice(pos,idx)));
+      pos=idx+tok.length;
+
+      let span=null;
+      if(tok.startsWith('//')||tok.startsWith('/*')){span=document.createElement('span'); span.className='tk-comment';}
+      else if(tok.startsWith('#')){span=document.createElement('span'); span.className='tk-preproc';}
+      else if(tok.startsWith('<') && tok.endsWith('>')){span=document.createElement('span'); span.className='tk-include';}
+      else if(tok.startsWith('"') && tok.endsWith('"') || tok.startsWith("'") && tok.endsWith("'")){span=document.createElement('span'); span.className='tk-string';}
+      else if(/^\d+(\.\d+)?$/.test(tok)){span=document.createElement('span'); span.className='tk-num';}
+      else if(/^[A-Za-z_]\w*$/.test(tok)){
+        const keywords=new Set(["return","for","while","if","else","break","continue","switch","case","default","do","goto","sizeof"]);
+        const types=new Set(["int","char","float","double","void","short","long","signed","unsigned","const","struct","enum","union","typedef","static","extern","volatile","register"]);
+        const funcs=new Set(["main","printf","scanf","gets","puts","putchar","getc","fopen","fclose","fread","fwrite","memcpy","memset","strcpy","strlen"]);
+        if(keywords.has(tok)) span=document.createElement('span'),span.className='tk-key';
+        else if(types.has(tok)) span=document.createElement('span'),span.className='tk-type';
+        else if(funcs.has(tok)) span=document.createElement('span'),span.className='tk-func';
+      }
+      if(span){span.textContent=tok; frag.appendChild(span);}
+      else frag.appendChild(document.createTextNode(tok));
+    }
+    frag.appendChild(document.createTextNode('\n'));
+  }
+  pre.appendChild(frag);
+}
+
+async function fetchText(url){const r=await fetch(url);if(!r.ok)throw new Error('Fetch error '+r.status);return await r.text();}
+
+async function initCode(){
+  const params=new URLSearchParams(window.location.search);
+  const path=params.get('path')||'code.c';
+  buildBreadcrumb(path);
+  try{
+    const api=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const meta=await(await fetch(api)).json();
+    if(meta && meta.download_url){
+      const raw=await fetchText(meta.download_url);
+      const lines=raw.split(/\r?\n/);
+      // Question line
+      let qline=lines[0]||''; const m=qline.match(/^..(\d{1,4})\s+(.*)$/); if(m) qline=m[2]; else qline=qline.slice(2).trim();
+      document.getElementById('question').textContent='Q. '+qline;
+      // CODE: ignore first 2 lines
+      const code=lines.slice(2).join('\n');
+      highlightCSafe(code, document.getElementById('codeBlock'));
+      document.getElementById('copyBtn').onclick=()=>{navigator.clipboard.writeText(code).then(()=>alert('Copied!'),()=>alert('Copy failed'))};
+    } else {document.getElementById('question').textContent='No file found'; document.getElementById('codeBlock').textContent='';}
+  }catch(err){document.getElementById('question').textContent='Error loading'; document.getElementById('codeBlock').textContent=err.message||String(err); console.error(err);}
+}
+</script>
 </body>
 </html>
