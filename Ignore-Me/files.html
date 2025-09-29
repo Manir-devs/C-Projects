@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Directory Files</title>
+  <meta charset="UTF-8">
+  <title>Files</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadFilesPage()">
-  <h1>GitHub Repo Explorer</h1>
-  <h2></h2>
-  <div class="container"></div>
+<body>
+  <h1 id="dirName"></h1>
+  <div id="spinner"></div>
+  <div id="content"></div>
   <script src="script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    loadFiles(params.get("path"));
+  </script>
 </body>
 </html>
