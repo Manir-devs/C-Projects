@@ -1,4 +1,4 @@
-//Write a C programe code to print average of three numbers.
+//4 Write a C programe code to print average of three numbers.
 
 #include<stdio.h>
 int main()
