@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Manir's C Projects</title>
+  <title>Repo Index</title>
   <link rel="stylesheet" href="Ignore-Me/style.css">
 </head>
-<body>
-  <h1>📂 C Projects</h1>
-  <div id="spinner"></div>
-  <div id="content"></div>
+<body onload="loadIndex()">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <h2>Root Directories</h2>
+  <div id="spinner" class="spinner"></div>
+  <div class="container" id="content"></div>
   <script src="Ignore-Me/script.js"></script>
-  <script>
-    loadIndex();
-  </script>
 </body>
 </html>
