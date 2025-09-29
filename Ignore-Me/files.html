@@ -5,14 +5,11 @@
   <title>Files</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1 id="dirName"></h1>
-  <div id="spinner"></div>
-  <div id="content"></div>
+<body onload="initFiles()">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <h2 id="dirName"></h2>
+  <div id="spinner" class="spinner"></div>
+  <div class="container" id="content"></div>
   <script src="script.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    loadFiles(params.get("path"));
-  </script>
 </body>
 </html>
