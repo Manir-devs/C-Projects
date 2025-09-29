@@ -1,4 +1,4 @@
-//Write a C programe to find the biggest of given two numbers.
+//2 Write a C programe to find the biggest of given two numbers.
 
 #include<stdio.h>
 int main()
