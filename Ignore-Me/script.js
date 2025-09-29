@@ -48,7 +48,7 @@ async function loadIndex() {
   data.forEach(item => {
     if (item.type === "dir" && item.name !== "Ignore-Me") {
       const btn = document.createElement("button");
-      btn.textContent = "📂 " + item.name;
+      btn.textContent = "🗀 " + item.name;
       btn.onclick = () => {
         window.location.href = `Ignore-Me/files.html?path=${encodeURIComponent(item.path)}`;
       };
@@ -64,7 +64,7 @@ async function initFiles() {
   if (!path) return;
 
   buildBreadcrumb(path);
-  document.getElementById("dirName").innerText = "📁 " + path;
+  document.getElementById("dirName").innerText = "🗀 " + path;
 
   showSpinner(true);
   const data = await fetchJson(apiBase + path);
@@ -121,7 +121,7 @@ async function initFiles() {
   // Render subdir buttons (after files)
   dirButtons.forEach(d => {
     const btn = document.createElement("button");
-    btn.textContent = "📂 " + d.name;
+    btn.textContent = "🗀 " + d.name;
     btn.onclick = () => {
       window.location.href = `files.html?path=${encodeURIComponent(d.path)}`;
     };
@@ -154,3 +154,6 @@ async function initCode() {
     alert("Copied!");
   };
 }
+
+
+
