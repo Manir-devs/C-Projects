@@ -11,7 +11,7 @@ function buildBreadcrumb(path) {
   const bc = document.getElementById("breadcrumb");
   if (!bc) return;
   const parts = path ? path.split("/") : [];
-  let html = `<a href="../index.html">Home</a>`;
+  let html = `<a href="https://Manir-devs.github.io/C-projects/">Home</a>`;
   let link = "";
   parts.forEach((p, i) => {
     link += (i ? "/" : "") + p;
