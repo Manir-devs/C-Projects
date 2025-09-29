@@ -1,4 +1,4 @@
-//Write a C programe to find the biggest of given three numbers.
+//3 Write a C programe to find the biggest of given three numbers.
 
 #include<stdio.h>
 int main()
