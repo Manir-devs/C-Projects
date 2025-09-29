@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Code</title>
+  <title>Code Viewer</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1 id="fileName"></h1>
-  <div id="spinner"></div>
-  <pre id="codeBlock"></pre>
+<body onload="initCode()">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <h2 id="fileName"></h2>
+  <div id="spinner" class="spinner"></div>
+  <div class="container">
+    <button id="copyBtn">Copy</button>
+    <pre id="codeBlock"></pre>
+  </div>
   <script src="script.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    loadCode(params.get("path"));
-  </script>
 </body>
 </html>
