@@ -31,8 +31,16 @@
 </div>
       <script>
 function toggleDrawer() {
-  document.getElementById("drawer").classList.toggle("active");
+  let drawer = document.getElementById("drawer");
+  let overlay = document.getElementById("overlay");
+  drawer.classList.toggle("active");
+  overlay.style.display = drawer.classList.contains("active") ? "block" : "none";
 }
+function closeDrawer() {
+  document.getElementById("drawer").classList.remove("active");
+  document.getElementById("overlay").style.display = "none";
+}
+
 </script>
 </div>
 
