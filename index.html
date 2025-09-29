@@ -1,15 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Repo Index</title>
-  <link rel="stylesheet" href="Ignore-Me/style.css">
-</head>
 <body onload="loadIndex()">
-  <div class="breadcrumb" id="breadcrumb"></div>
-  <h2>Root Directories</h2>
-  <div id="spinner" class="spinner"></div>
-  <div class="container" id="content"></div>
+  <!-- Header -->
+  <div id="header-container">
+    <style>
+      #header-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #222;
+        color: #fff;
+        padding: 10px 20px;
+      }
+      .header .title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .header .menu {
+        font-size: 24px;
+        cursor: pointer;
+      }
+      /* Content + Footer layout */
+      body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      #main-content {
+        flex: 1;
+      }
+      footer {
+        background: #111;
+        color: #aaa;
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+    <div class="header">
+      <div class="title">My Website</div>
+      <div class="menu">&#8942;</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <h2>Root Directories</h2>
+    <div id="spinner" class="spinner"></div>
+    <div class="container" id="content"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 My Website | All rights reserved
+  </footer>
+
   <script src="Ignore-Me/script.js"></script>
 </body>
-</html>
