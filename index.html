@@ -3,54 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Repo Index</title>
-  <link rel="stylesheet" href="Ignore-Me/style.css">
+  <link rel="stylesheet" href="Ignore-Me/index.css">
 </head>
 <body onload="loadIndex()">
   <!-- Header -->
   <div id="header-container">
-    
     <div class="header">
-  <div class="title-area">
-    <div class="title">BCA C projects by Manir</div>
-    <div class="breadcrumb" id="breadcrumb"></div>
-  </div>
-  <div class="menu" onclick="toggleDrawer()">&#8942;</div>
-<div id="overlay" onclick="closeDrawer()"></div>
-
-<!-- Drawer -->
-<div id="drawer">
-  <div class="drawer-header">
-    <img src="https://avatars.githubusercontent.com/u/210948104?v=4" alt="Profile">
-    <h3>Manir</h3>
-  </div>
-  <div class="drawer-links">
-    <a href="https://github.com/Manir-devs/" target="_blank"> Github</a>
-    <a href="https://instagram.com/artistry_with_manir___" target="_blank"> Instagram</a>
-    <a href="mailto:maniruz.zaman.primary@gmail.com"> Mail</a>
-  </div>
-</div>
-      <script>
-function toggleDrawer() {
-  let drawer = document.getElementById("drawer");
-  let overlay = document.getElementById("overlay");
-  drawer.classList.toggle("active");
-  overlay.style.display = drawer.classList.contains("active") ? "block" : "none";
-}
-function closeDrawer() {
-  document.getElementById("drawer").classList.remove("active");
-  document.getElementById("overlay").style.display = "none";
-}
-
-</script>
-</div>
-
+      <div class="title-area">
+        <div class="title">BCA C projects by Manir</div>
+        <div class="breadcrumb" id="breadcrumb"></div>
+      </div>
+      <div class="menu" onclick="toggleDrawer()">&#8942;</div>
+      <div id="overlay" onclick="closeDrawer()"></div>
+      <!-- Drawer -->
+      <div id="drawer">
+        <div class="drawer-header">
+          <img src="https://avatars.githubusercontent.com/u/210948104?v=4" alt="Profile">
+          <h3>Manir</h3>
+        </div>
+        <div class="drawer-links">
+          <button style="margin:0px; border:1px solid blue; background-color: #333;" id="shareBtn">Share</button>
+          <a href="https://github.com/Manir-devs/" target="_blank"> Github</a>
+          <a href="https://instagram.com/artistry_with_manir___" target="_blank"> Instagram</a>
+          <a href="mailto:maniruz.zaman.primary@gmail.com"> Mail</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
-    <div class="breadcrumb" id="breadcrumb"></div>
     <h2>Root Directories</h2>
     <div id="spinner" class="spinner"></div>
     <div class="container" id="content"></div>
@@ -61,7 +44,6 @@ function closeDrawer() {
     &copy; 2025 Manir | All rights reserved
   </footer>
 
-  <script src="Ignore-Me/script.js"></script>
+  <script src="Ignore-Me/index.js"></script>
 </body>
-
 </html>
