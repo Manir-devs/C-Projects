@@ -56,17 +56,34 @@ async function loadIndex() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  data.forEach(item => {
-    if (item.type === "dir" && item.name !== "Ignore-Me") {
-      const btn = document.createElement("button");
-      btn.textContent = "" + item.name;
-      btn.onclick = () => {
-        window.location.href = `Ignore-Me/files.html?path=${encodeURIComponent(item.path)}`;
+  // Filter and sort directories
+  const directories = data
+    .filter(item => item.type === "dir" && item.name !== "Ignore-Me")
+    .sort((a, b) => {
+      // Extract serial number if it exists
+      const getSerial = name => {
+        const match = name.match(/^(\d+)\./);
+        return match ? parseInt(match[1]) : Infinity; // Non-numbered folders go to the end
       };
-      container.appendChild(btn);
-    }
+      const sa = getSerial(a.name);
+      const sb = getSerial(b.name);
+      if (sa < sb) return -1;
+      if (sa > sb) return 1;
+      return 0;
+    });
+
+  directories.forEach(item => {
+    // Display name without the serial number and dot
+    const displayName = item.name.replace(/^\d+\./, "");
+    const btn = document.createElement("button");
+    btn.textContent = displayName;
+    btn.onclick = () => {
+      window.location.href = `Ignore-Me/files.html?path=${encodeURIComponent(item.path)}`;
+    };
+    container.appendChild(btn);
   });
 }
+
 document.getElementById("shareBtn").addEventListener("click", () => {
   if (navigator.share) {
     // Mobile share
