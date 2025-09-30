@@ -122,7 +122,7 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     // Mobile share
     navigator.share({
       title: "BCA All C Projects",
-      text: "All C programming tested, real code",
+      text: "",
       url: window.location.href
     });
   } else {
