@@ -75,6 +75,110 @@
     <div class="container" id="content"></div>
   </div>
 
+    <div id="projectsContainer">
+  <style id="styleProjects">
+    /* Container */
+    #projectsContainer {
+      max-width:720px;
+      margin:20px auto;
+      padding:20px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#0f172a 0%, #071029 100%);
+      color:#e6eef8;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, monospace;
+      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    /* Heading */
+    #headingFirst {
+      margin:0 0 10px 0;
+      font-size:1.4rem;
+      letter-spacing:0.2px;
+    }
+
+    /* Description paragraph */
+    #paragraphFirst {
+      margin:0 0 14px 0;
+      line-height:1.45;
+      opacity:0.95;
+      font-size:0.98rem;
+    }
+
+    /* Feature list */
+    #listFirst {
+      margin:0 0 14px 18px;
+      padding:0;
+      font-size:0.95rem;
+    }
+    #liOne, #liTwo, #liThree {
+      margin-bottom:8px;
+    }
+
+    /* Code sample box */
+    #codeBox {
+      display:block;
+      width:100%;
+      padding:12px;
+      margin:10px 0 14px 0;
+      border-radius:8px;
+      background:#00101a;
+      color:#cfeefc;
+      font-family: "Fira Code", "Courier New", monospace;
+      font-size:0.9rem;
+      overflow:auto;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Small note */
+    #noteFirst {
+      margin:0 0 12px 0;
+      font-size:0.85rem;
+      opacity:0.8;
+    }
+
+    /* CTA link */
+    #linkFirst {
+      display:inline-block;
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:8px;
+      background:#0ea5a5;
+      color:#012;
+      font-weight:600;
+    }
+  </style>
+
+  <h1 id="headingFirst">C Projects for BCA Students — Tested & Trusted</h1>
+
+  <p id="paragraphFirst">
+    This collection contains exact classroom C programs, cleaned and fully tested.  
+    No fluff — copy the code, paste it in your editor, compile and run. Perfect for assignments, labs, and quick practice.
+  </p>
+
+  <ul id="listFirst">
+    <li id="liOne">Original class programs — preserved logic, bugs fixed.</li>
+    <li id="liTwo">Easy to copy-paste and run — works with standard GCC setups.</li>
+    <li id="liThree">Comments included so you actually understand what you submit.</li>
+  </ul>
+
+  <pre id="codeBox">
+// Example: Hello World (works out of the box)
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, BCA world!\n");
+    return 0;
+}
+  </pre>
+
+  <p id="noteFirst">
+    Tip: Use <code id="inlineCode">gcc file.c -o file</code> then <code id="inlineCode2">./file</code> to run.
+  </p>
+
+  <a id="linkFirst" href="#" onclick="return false;">Get the full project bundle</a>
+</div>
+
+
   <!-- Footer -->
   <footer>
     &copy; 2025 Manir | All rights reserved
