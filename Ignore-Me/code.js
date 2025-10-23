@@ -85,10 +85,21 @@ async function initCode() {
       const raw = await fetchText(meta.download_url);
       const lines = raw.split(/\r?\n/);
       let qline = lines[0] || '';
+
+      // ✅ Remove <file> ... </file> and its content
+      qline = qline.replace(/<file>[\s\S]*?<\/file>/gi, '').trim();
+
       const m = qline.match(/^..(\d{1,4})\s+(.*)$/);
       if (m) qline = m[2];
       else qline = qline.slice(2).trim();
-      document.getElementById('question').textContent = 'Q. ' + qline;
+
+      // ✅ Keep "Q." and render HTML tags safely
+      if (/<[^>]+>/.test(qline)) {
+        document.getElementById('question').innerHTML = 'Q. ' + qline;
+      } else {
+        document.getElementById('question').textContent = 'Q. ' + qline;
+      }
+
       const code = lines.slice(2).join('\n');
       highlightCSafe(code, document.getElementById('codeBlock'));
       document.getElementById('copyBtn').onclick = () => {
@@ -107,17 +118,13 @@ async function initCode() {
 
 document.getElementById("shareBtn").addEventListener("click", () => {
   if (navigator.share) {
-    // Mobile share
     navigator.share({
       title: "BCA All C Projects",
       text: "",
       url: window.location.href
     });
   } else {
-    // Desktop fallback: popup with copy option
     const url = window.location.href;
-
-    // Popup container
     const popup = document.createElement("div");
     popup.style.position = "fixed";
     popup.style.top = "50%";
@@ -131,14 +138,12 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     popup.style.zIndex = "9999";
     popup.style.textAlign = "center";
 
-    // Input box with URL
     const input = document.createElement("input");
     input.type = "text";
     input.value = url;
     input.style.width = "250px";
     input.style.marginBottom = "10px";
 
-    // Copy button
     const copyBtn = document.createElement("button");
     copyBtn.innerText = "Copy Link";
     copyBtn.style.marginRight = "10px";
@@ -149,12 +154,10 @@ document.getElementById("shareBtn").addEventListener("click", () => {
       setTimeout(() => (copyBtn.innerText = "Copy Link"), 1500);
     };
 
-    // Close button
     const closeBtn = document.createElement("button");
     closeBtn.innerText = "Close";
     closeBtn.onclick = () => popup.remove();
 
-    // Add elements
     popup.appendChild(input);
     popup.appendChild(document.createElement("br"));
     popup.appendChild(copyBtn);
