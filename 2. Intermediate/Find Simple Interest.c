@@ -1,4 +1,4 @@
-//1 Find the simple interest of the following data - <br> P = 5000, rate = 7.5, time = 4
+//1 Find the simple interest of the following data - <br> P = 5000, rate = 7.5, time = 4 <file>Find The Simple Interest of Data</file>
 
 #include<stdio.h>
 
