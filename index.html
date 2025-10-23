@@ -58,7 +58,7 @@
   <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span><span>p</span><span>e</span><span>r</span><span>s</span>
 </span>
 <style> 
-    .title {
+   .title {
   font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
   color: #00ff00;
@@ -69,10 +69,12 @@
 .floating-text {
   position: absolute;
   bottom: 0;
-  right: -10px;
+  left: 100%; /* BCA Team ke right side me shift kar diya */
+  margin-left: 10px; /* thoda gap */
   font-size: 14px;
   color: #00ffff;
   display: inline-block;
+  white-space: nowrap; /* text ek line me rahe */
 }
 
 .floating-text span {
@@ -83,13 +85,14 @@
 .floating-text span:nth-child(1) { animation-delay: 0s; }
 .floating-text span:nth-child(2) { animation-delay: 0.2s; }
 .floating-text span:nth-child(3) { animation-delay: 0.4s; }
-/* aur aise jitne letters ho, unke liye delay set kar sakte ho */
+/* aur jitne letters hai unke liye delays add kar sakte ho */
 
 @keyframes float {
   0% { transform: translateY(0); opacity: 0.8; }
   50% { transform: translateY(-5px); opacity: 1; }
   100% { transform: translateY(0); opacity: 0.8; }
 }
+
 </style>
 </div>
 
