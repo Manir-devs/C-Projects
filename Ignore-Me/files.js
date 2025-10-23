@@ -69,18 +69,31 @@ async function initFiles() {
     if (item.type === "file") {
       filePromises.push(
         fetchText(item.download_url).then(text => {
-          const firstLine = (text.split("\n")[0] || item.name).trim();
-          let serial = 9999;
-          let title = firstLine;
-          const match = firstLine.match(/^\/\/\s*(\d+)\s+(.*)$/);
-          if (match) {
-            serial = parseInt(match[1], 10);
-            title = match[2].trim();
+          // Extract from <file>...</file> if available
+          let fileTagMatch = text.match(/<file>([\s\S]*?)<\/file>/i);
+          let titleHtml = "";
+          if (fileTagMatch) {
+            titleHtml = fileTagMatch[1].trim();
+          } else {
+            const firstLine = (text.split("\n")[0] || item.name).trim();
+            const match = firstLine.match(/^\/\/\s*(\d+)\s+(.*)$/);
+            let serial = 9999;
+            let title = firstLine;
+            if (match) {
+              serial = parseInt(match[1], 10);
+              title = match[2].trim();
+            }
+            return { serial, title: title || item.name, path: item.path, htmlTitle: null };
           }
-          return { serial, title: title || item.name, path: item.path };
+
+          // Try extracting serial from inside file tag (optional)
+          const serialMatch = titleHtml.match(/^(\d+)\./);
+          let serial = serialMatch ? parseInt(serialMatch[1], 10) : 9999;
+
+          return { serial, title: "", htmlTitle: titleHtml, path: item.path };
         }).catch(e => {
           console.error("Error fetching file:", e);
-          return { serial: 9999, title: item.name, path: item.path };
+          return { serial: 9999, title: item.name, path: item.path, htmlTitle: null };
         })
       );
     } else if (item.type === "dir" && item.name !== "Ignore-Me") {
@@ -107,7 +120,13 @@ async function initFiles() {
   // Render file buttons
   fileButtons.forEach(f => {
     const btn = document.createElement("button");
-    btn.textContent = `${f.serial}. ${f.title}`;
+
+    if (f.htmlTitle) {
+      btn.innerHTML = f.htmlTitle; // Use HTML inside <file> tag
+    } else {
+      btn.textContent = `${f.serial}. ${f.title}`;
+    }
+
     btn.onclick = () => {
       window.location.href = `code.html?path=${encodeURIComponent(f.path)}`;
     };
@@ -115,21 +134,15 @@ async function initFiles() {
   });
 }
 
-
-
 document.getElementById("shareBtn").addEventListener("click", () => {
   if (navigator.share) {
-    // Mobile share
     navigator.share({
       title: "BCA All C Projects",
       text: "",
       url: window.location.href
     });
   } else {
-    // Desktop fallback: popup with copy option
     const url = window.location.href;
-
-    // Popup container
     const popup = document.createElement("div");
     popup.style.position = "fixed";
     popup.style.top = "50%";
@@ -143,14 +156,12 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     popup.style.zIndex = "9999";
     popup.style.textAlign = "center";
 
-    // Input box with URL
     const input = document.createElement("input");
     input.type = "text";
     input.value = url;
     input.style.width = "250px";
     input.style.marginBottom = "10px";
 
-    // Copy button
     const copyBtn = document.createElement("button");
     copyBtn.innerText = "Copy Link";
     copyBtn.style.marginRight = "10px";
@@ -161,12 +172,10 @@ document.getElementById("shareBtn").addEventListener("click", () => {
       setTimeout(() => (copyBtn.innerText = "Copy Link"), 1500);
     };
 
-    // Close button
     const closeBtn = document.createElement("button");
     closeBtn.innerText = "Close";
     closeBtn.onclick = () => popup.remove();
 
-    // Add elements
     popup.appendChild(input);
     popup.appendChild(document.createElement("br"));
     popup.appendChild(copyBtn);
