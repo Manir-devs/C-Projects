@@ -1,4 +1,4 @@
-//3. Write the C programme to print natural number from 1 to n using for loop. <file>3. Write the C programme to print natural number from 1 to n using for loop.</file>
+//3. Write the C program to print natural number from 1 to n using for loop. <file>3. Write the C program to print natural number from 1 to n using for loop</file>
 
 #include<stdio.h>
 int main()
