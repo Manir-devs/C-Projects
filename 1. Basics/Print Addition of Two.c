@@ -1,4 +1,4 @@
-//5 Write a C program to add two numbers and print the result.
+//5. Write a C program to add two numbers and print the result. <file>5. Write a C program to add two numbers and print the result</file><sm>https://manir-devs.github.io/C-Projects/Ignore-Me/code.html?path=1.%20Basics%2FPrint%20Addition%20of%20Two.c</sm>
 
 #include<stdio.h>
 int main()
