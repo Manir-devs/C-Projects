@@ -1,4 +1,4 @@
-//6. Write a C program to convert weight from kilograms to grams.<file>6. Write a C program to convert weight from kilograms to grams</file>
+//6. Write a C program to convert weight from kilograms to grams.<file>6. Write a C program to convert weight from <mark>kilograms to grams</mark></file>
 
 #include <stdio.h>
 int main() {
