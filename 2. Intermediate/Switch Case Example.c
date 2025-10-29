@@ -1,4 +1,4 @@
-//7. Switch Case example. <file>7. Switch Case Example</file>
+//7. Switch Case example. <file>7. <mark>Switch Case</mark> Example</file>
 
 #include<stdio.h>
 int main()
