@@ -1,4 +1,4 @@
-//6. Write the C program to print natural number from 1 to n using do-while loop. <file>6. Write the C program to print natural number from 1 to n using do-while loop</file>
+//6. Write the C program to print natural number from 1 to n using do-while loop. <file>6. Write the C program to print natural number from 1 to n using <mark>do-while loop</mark></file>
 
 #include<stdio.h>
 int main()
