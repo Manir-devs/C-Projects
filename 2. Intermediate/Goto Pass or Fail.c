@@ -1,4 +1,4 @@
-//9. Check pass or fail using goto statement. <file>9. Check pass or fail using <mark>goto statement</mark></file>
+//10. Check pass or fail using goto statement. <file>10. Check pass or fail using <mark>goto statement</mark></file>
 
 #include<stdio.h>
 int main()
