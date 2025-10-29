@@ -6,19 +6,14 @@ int main()
   int num;
   printf("Enter your mark: ");
   scanf("%d", &num);
-
+  if(num>30)
+    goto table1;
+  else
+    goto table2;
 table1:
   printf("Pass");
+  return 0;
 table2:
   printf("Fail");
-
-  if(num>30)
-  {
-    goto table1;
-  }
-  else
-  {
-    goto table2;
-  }
   return 0;
 }
