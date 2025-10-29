@@ -1,4 +1,4 @@
-//2. Write a C program to generate and print Fibonacci Series <br> ie: 0 1 1 2 3 5 8 13 ...n <file>2. Generate and Print Fibonacci Series</file>
+//2. Write a C program to generate and print Fibonacci Series <br> ie: 0 1 1 2 3 5 8 13 ...n <file>2. Generate and Print <mark>Fibonacci Series</mark></file>
 
 #include <stdio.h>
 
