@@ -1,4 +1,4 @@
-//8. Write a simple goto statement example. <file>8. Goto statement example</file>
+//8. Write a simple goto statement example. <file>8. <mark>Goto</mark> statement example</file>
 
 #include<stdio.h>
 int main()
