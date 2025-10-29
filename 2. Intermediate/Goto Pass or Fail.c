@@ -5,14 +5,12 @@ int main()
 {
   int num;
   printf("Enter your mark: ");
-  scanf("%d", num);
+  scanf("%d", &num);
 
 table1:
   printf("Pass");
-  break;
 table2:
   printf("Fail");
-  break;
 
   if(num>30)
   {
