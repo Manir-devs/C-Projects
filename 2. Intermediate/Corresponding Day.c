@@ -1,4 +1,4 @@
-//8. Write a program to enter a number from 1 to 7 and display the corresponding day of the week using switch case. <file>8. Write a program to enter a number from 1 to 7 and display the corresponding day of the week using switch case.</file>
+//8. Write a program to enter a number from 1 to 7 and display the corresponding day of the week using switch case. <file>8. Write a program to enter a number from 1 to 7 and <mark>display the corresponding day</mark> of the week <mark>using switch case.</mark></file>
 
 #include<stdio.h>
 int main()
