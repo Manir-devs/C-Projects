@@ -25,8 +25,8 @@ int main()
 			small = a[i];
 		}
 	}
-	printf("Largest element in vector is %.2f", large);
-	printf("Smallest element in vector is %.2f", small);
+	printf("Largest element in vector is %.2f. and,\n", large);
+	printf("Smallest element in vector is %.2f.", small);
 	return 0;
 }
      
