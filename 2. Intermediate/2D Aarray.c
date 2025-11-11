@@ -1,4 +1,4 @@
-//15. Two dimensional array example. <file><mark>Two dimensional array</mark> example</file>
+//15. Two dimensional array example. <file>15. <mark>Two dimensional array</mark> example</file>
 
 #include<stdio.h>
 int main()
