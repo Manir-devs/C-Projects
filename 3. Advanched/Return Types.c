@@ -1,4 +1,4 @@
-//3. Conditions of return types and arguments. <br><p stype="color:#ff0000;">[Non compilable]</p> <file>3. Conditions of <mark>return types</mark> and arguments</file>
+//3. Conditions of return types and arguments. <br><p style="color:#ff0000;">[Non compilable]</p> <file>3. Conditions of <mark>return types</mark> and arguments</file>
 
 //1. Function with no arguments and no return value:
 void boy(void)  //no arguments
@@ -17,7 +17,7 @@ int add(void)  //no arguments
 void multi(int r)  //argument
 {
   int result = r * r * 3.14;
-  printf("%d", return);
+  printf("%.2f", result);
   getch();    //no return value
 }
 void main()
@@ -29,7 +29,7 @@ void main()
   getch();
 }
 
-//4. Function and arguments with return value:
+//4. Function with arguments and with return value:
 int add(int x, int y)  //arguments
 {
   return x+y;  //return value
