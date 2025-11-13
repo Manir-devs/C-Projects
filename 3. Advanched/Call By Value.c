@@ -11,15 +11,14 @@ int main()
 
         printf("\nValues before swap: m = %d, n = %d\n", m, n);
         swap(m, n);  //value pass
-        printf("Value after swap: m = %d, n = %d\n", m, n);
         return 0;
 }
-
-
 void swap(int a, int b)       //Formal parameter
 {
         int temp;
         temp = a;
         a = b;
         b = temp;
+        printf("\nValues after swap: m = %d, n = %d\n", a, b);
 }
+
