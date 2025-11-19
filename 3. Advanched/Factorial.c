@@ -1,4 +1,4 @@
-//6. Write a C program to calculate the factorial of a given number using a recursive function. <file>6. Write a C program to calculate the <mark>factorial of a given number</mark> using a recursive function.</file>
+//6. Write a C program to calculate the factorial of a given number using a recursive function. <file>6. Write a C program to calculate the <mark>factorial of a given number</mark> using a recursive function</file>
 
 #include<stdio.h>
 int fact(unsigned int i)	//unsigned int means positive values only. no negative values.
